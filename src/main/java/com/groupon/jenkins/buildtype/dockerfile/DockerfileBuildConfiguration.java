@@ -72,6 +72,16 @@ public class DockerfileBuildConfiguration extends DockerBuildConfiguration {
         DockerCommandBuilder dockerRunCommand = dockerCommand("run")
                 .flag("rm")
                 .flag("sig-proxy=true")
+                .flag("v", "/usr/bin/docker:/bin/docker")
+                .flag("v","/var/run/docker.sock:/docker.sock")
+                .flag("e", "DOCKER_HOST=\"unix:///docker.sock\"")
+                .flag("e", "DOCKER_USERNAME=\"$DOCKER_USERNAME\"")
+                .flag("e", "DOCKER_PASSWORD=\"$DOCKER_PASSWORD\"")
+                .flag("e", "DOCKER_EMAIL=\"$DOCKER_EMAIL\"")
+                .flag("e", "DOTCI_SHA=\"$DOTCI_SHA\"")
+                .flag("e", "DOTCI_PUSHER=\"$DOTCI_PUSHER\"")
+                .flag("e", "DOTCI_BRANCH=\"$DOTCI_BRANCH\"")
+                .flag("e", "DOTCI_PULL_REQUEST=\"$DOTCI_PULL_REQUEST\"")
                 .bulkOptions(config.get("run_params", String.class))
                 .args("dockerfile", buildShellCommand);
         buildCommands.addAll(linkServicesToRunCommand(dockerRunCommand, config.get("links", List.class)));
