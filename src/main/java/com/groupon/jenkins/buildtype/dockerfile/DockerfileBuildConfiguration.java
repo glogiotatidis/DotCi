@@ -82,6 +82,7 @@ public class DockerfileBuildConfiguration extends DockerBuildConfiguration {
                 .flag("e", "DOTCI_PUSHER=\"$DOTCI_PUSHER\"")
                 .flag("e", "DOTCI_BRANCH=\"$DOTCI_BRANCH\"")
                 .flag("e", "DOTCI_PULL_REQUEST=\"$DOTCI_PULL_REQUEST\"")
+                .flag("e", "DOCKER_REPOSITORY=\"$DOCKER_REPOSITORY\"")
                 .bulkOptions(config.get("run_params", String.class))
                 .args("dockerfile", buildShellCommand);
         buildCommands.addAll(linkServicesToRunCommand(dockerRunCommand, config.get("links", List.class)));
